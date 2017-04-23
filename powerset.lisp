@@ -80,9 +80,11 @@
 ;;;  ;(print-list (n-binstrs (power-set-size (list-length input-set)) (list-length input-set)))
 ;;;  )
 
-(let ((some-input '(x y z)))
+(let ((some-input '()))
   (format t "input list:")
   (print-list some-input)
-  (format t "power-set-size: ~D" (power-set-size (list-length some-input)))
+  (format t "~CPower-set-size: ~D~C" #\newline (power-set-size (list-length some-input)) #\newline)
+  (format t "~CBinary string list:" #\newline)
   (print-list (n-binstrs (power-set-size (list-length some-input)) (list-length some-input)))
+  (format t "~CPower set list:~C" #\newline #\newline)
   (print-list-of-lists (powerset some-input (n-binstrs (power-set-size (list-length some-input)) (list-length some-input)) 0) 0))
