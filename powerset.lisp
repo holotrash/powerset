@@ -35,8 +35,8 @@
                        (hexstr-to-binstr (write-to-string integer :base 16) "")))
 
 (defun n-binstrs (n set-size)
-  (cons (int-to-binstr (+ n 1) set-size) (cond 
-                                     ((= n 1) '()) 
+  (cons (int-to-binstr n set-size) (cond 
+                                     ((= n 0) '()) 
                                      (T (n-binstrs (- n 1) set-size)))))
 
 (defun subset-from-binstr (set binstr i)
@@ -56,7 +56,7 @@
 
 (defun string-of-zeroes (length)
   (cond
-    ((= length 0) "")
+    ((< length 1) "")
     ((= length 1) "0")
     (T (concatenate 'string "0" (string-of-zeroes (- length 1))))))
 
@@ -84,6 +84,5 @@
   (format t "input list:")
   (print-list some-input)
   (format t "power-set-size: ~D" (power-set-size (list-length some-input)))
-  ;(print-list (n-binstrs (power-set-size (list-length some-input)) (list-length some-input)))
-  (print-list (n-binstrs (power-set-size 1) 1)))
-  )
+  (print-list (n-binstrs (power-set-size (list-length some-input)) (list-length some-input)))
+  (print-list-of-lists (powerset some-input (n-binstrs (power-set-size (list-length some-input)) (list-length some-input)) 0) 0))
