@@ -1,7 +1,17 @@
 (defun signif-digits (input-set-size)
   (cond
     ((= input-set-size 0) 1) 
-    (T input-set-size)))   
+    ((= input-set-size 1) 1)
+    ((= input-set-size 2) 2)
+    ((= input-set-size 3) 3)
+    ((= input-set-size 4) 4)
+    ((= input-set-size 5) 5)
+    ((= input-set-size 6) 6)
+    ((= input-set-size 7) 7)
+    ((= input-set-size 8) 8)
+    ((= input-set-size 9) 9)
+    ((= input-set-size 10) 10)))
+
       
 (defun power-set-size (input-set-size)
   (expt 2 input-set-size))
@@ -35,17 +45,17 @@
                        (hexstr-to-binstr (write-to-string integer :base 16) "")))
 
 (defun n-binstrs (n set-size)
-  (cons (int-to-binstr n set-size) (cond 
-                                     ((= n 0) '()) 
+  (cons (int-to-binstr (- n 1) set-size) (cond 
+                                     ((= n 1) '()) 
                                      (T (n-binstrs (- n 1) set-size)))))
 
 (defun subset-from-binstr (set binstr i)
   (cond
     ((= i (signif-digits (list-length set))) '())
     (T (cond
-         ((string-equal (subseq binstr i (+ i 1)) "1") (cons (nth i set)
-                                                        (subset-from-binstr set binstr (+ i 1))))
-         ((string-equal (subseq binstr i (+ i 1)) "0")  (subset-from-binstr set binstr (+ i 1)))))))
+         ((string-equal (subseq binstr (- (signif-digits (list-length set)) i) (+ (- (signif-digits (list-length set)) i) 1)) "1") (cons (nth i set)
+                                                                                                                                   (subset-from-binstr set binstr (+ i 1))))
+         ((string-equal (subseq binstr (- (signif-digits (list-length set)) i) (+ (- (signif-digits (list-length set)) i) 1)) "0") (subset-from-binstr set binstr (+ i 1)))))))
 
 (defun powerset (inputset binstrs i)
   (cond
@@ -80,11 +90,12 @@
 ;;;  ;(print-list (n-binstrs (power-set-size (list-length input-set)) (list-length input-set)))
 ;;;  )
 
-(let ((some-input '()))
+(let ((some-input '(a)))
   (format t "input list:")
   (print-list some-input)
   (format t "~CPower-set-size: ~D~C" #\newline (power-set-size (list-length some-input)) #\newline)
   (format t "~CBinary string list:" #\newline)
   (print-list (n-binstrs (power-set-size (list-length some-input)) (list-length some-input)))
+  (format t "signif digits: ~D" (signif-digits (list-length some-input)))
   (format t "~CPower set list:~C" #\newline #\newline)
   (print-list-of-lists (powerset some-input (n-binstrs (power-set-size (list-length some-input)) (list-length some-input)) 0) 0))
