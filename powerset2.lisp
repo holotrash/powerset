@@ -1,5 +1,3 @@
-
-
 (defun add-to-each (in-set-set out-set-set element)
   (cond
     ((= (list-length in-set-set) 0)  out-set-set)
@@ -26,19 +24,7 @@
        (print-list (car list-of-lists))
        (print-list-of-lists (cdr list-of-lists) (+ i 1)))))
 
-;;; TEST OUTPUT
-;;;(let ((input-set '()))
-;;;  ;(print-list-of-lists (powerset input-set (n-binstrs (power-set-size (list-length input-set)) (list-length input-set)) 0) 0)
-;;;  ;(format t "power-set-size: ~D" (power-set-size (list-length input-set)))
-;;;  ;(print-list (n-binstrs (power-set-size (list-length input-set)) (list-length input-set)))
-;;;  )
-
 (let ((some-input '(a b)))
-  ;(format t "input list:")
   (print-list some-input)
-  ;(format t "~CPower-set-size: ~D~C" #\newline (power-set-size (list-length some-input)) #\newline)
-  ;(format t "~CBinary string list:" #\newline)
-  ;(print-list (n-binstrs (power-set-size (list-length some-input)) (list-length some-input)))
-  ;(format t "signif digits: ~D" (signif-digits (list-length some-input)))
   (format t "~CPower set list:~C" #\newline #\newline)
   (print-list-of-lists (power-set some-input '('())) 0))
